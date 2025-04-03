@@ -12,7 +12,7 @@ db.init_app(app)
 
 APP_ID = "967570292026238"
 APP_SECRET = "9523bc2e435818c1bfb15c514b0384c5"
-REDIRECT_URI = "https://9033-116-199-207-98.ngrok-free.app/callback"
+REDIRECT_URI = "https://popmenu.onrender.com/callback"
 
 
 # Helper function to fetch data
