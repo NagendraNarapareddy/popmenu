@@ -3,62 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instagram Profile</title>
+    <title>Pop Menu</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #346134;
+        }
+        .menu-image {
+            background-image: url('https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-4.0.3');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
 </head>
-<body class="bg-gray-100 min-h-screen">
-    <div class="container mx-auto p-4">
-        <!-- Profile Info -->
-        <div class="bg-white p-8 rounded-lg shadow-lg max-w-md mx-auto mb-8">
-            <h1 class="text-2xl font-bold text-center text-gray-800 mb-6">Instagram Profile</h1>
-            <div class="space-y-4">
-                <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                    <span class="text-gray-600 font-medium">Username</span>
-                    <span class="text-gray-800 font-semibold">{{ username }}</span>
+<body class="min-h-screen text-white">
+    <!-- Header -->
+    <header class="py-6 px-8 flex justify-between items-center border-b border-green-700">
+        <h1 class="text-3xl font-bold">Pop Menu</h1>
+        <nav>
+            <ul class="flex space-x-8">
+                <li><a href="{{url_for('getstarted')}}" class="hover:text-green-300 transition">Get Started</a></li>
+                <li><a href="{{url_for('menus')}}" class="hover:text-green-300 transition">menus</a></li>
+                <li><a href="#" class="hover:text-green-300 transition">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-8 py-12">
+        <div class="flex flex-col md:flex-row gap-12">
+            <!-- Left Side - Text Content -->
+            <div class="flex-1 space-y-8">
+                <h2 class="text-4xl font-bold">View Restaurant Menus</h2>
+                <p class="text-lg text-green-100">
+                    Discover delicious food from your favorite restaurants. Browse menus, view popular items, and plan your perfect meal.
+                </p>
+                
+                <div class="bg-green-800 bg-opacity-50 p-6 rounded-lg">
+                    <h3 class="text-2xl font-semibold mb-4">Recently Viewed Items</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-center space-x-3">
+                            <span class="w-3 h-3 bg-green-400 rounded-full"></span>
+                            <span>Classic Cheeseburger</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <span class="w-3 h-3 bg-green-400 rounded-full"></span>
+                            <span>Margherita Pizza</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <span class="w-3 h-3 bg-green-400 rounded-full"></span>
+                            <span>Chicken Wings</span>
+                        </li>
+                    </ul>
                 </div>
-                <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                    <span class="text-gray-600 font-medium">Followers</span>
-                    <span class="text-gray-800 font-semibold">{{ followers_count }}</span>
-                </div>
-                <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                    <span class="text-gray-600 font-medium">Posts</span>
-                    <span class="text-gray-800 font-semibold">{{ media_count }}</span>
+
+                <button class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-medium transition">
+                    Explore Menus
+                </button>
+            </div>
+
+            <!-- Right Side - Image Placeholder -->
+            <div class="flex-1">
+                <div class="menu-image h-full min-h-80 rounded-lg shadow-xl overflow-hidden">
+                    
                 </div>
             </div>
-            <div class="mt-6 text-center">
-                <a href="/" class="inline-block px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                    Log Out
-                </a>
-            </div>
         </div>
+    </main>
 
-        <!-- Posts Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {% for post in posts %}
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                    <!-- Media -->
-                    {% if post.media_url %}
-                        <img src="{{ post.media_url }}" alt="Post" class="w-full h-64 object-cover">
-                    {% elif post.carousel_media %}
-                        <div class="carousel">
-                            {% for media_url in post.carousel_media %}
-                                <img src="{{ media_url }}" alt="Carousel item" class="w-full h-64 object-cover">
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-
-                    <!-- Post Details -->
-                    <div class="p-4">
-                        {% if post.caption %}
-                            <p class="text-gray-700 mb-2">{{ post.caption }}</p>
-                        {% endif %}
-                        <div class="text-sm text-gray-600">
-                            <span>Likes: {{ post.like_count }}</span>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-    </div>
+    <!-- Footer -->
+    <footer class="py-6 px-8 border-t border-green-700 text-center text-green-200">
+        <p>© 2025 Pop Menu. All rights reserved.</p>
+    </footer>
 </body>
 </html>

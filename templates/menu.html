@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ restaurant.name }} - Retro Menu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Retro styling */
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: #f5f0e4;
+            color: #3a3226;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-image: url('https://www.transparenttextures.com/patterns/paper.png');
+        }
+        
+        .restaurant-header {
+            text-align: center;
+            padding: 20px;
+            margin-bottom: 30px;
+            background: #fff9e6;
+            border: 2px solid #d4b483;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            font-family: 'Times New Roman', serif;
+            color: #8b4513;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        
+        .menu-item {
+            background: #fff9e6;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #d4b483;
+            overflow: hidden;
+        }
+        
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 15px;
+            cursor: pointer;
+            background: #f5e8c9;
+            border-bottom: 1px dashed #d4b483;
+        }
+        
+        .item-name {
+            font-weight: bold;
+        }
+        
+        .item-price {
+            color: #8b4513;
+            font-weight: bold;
+        }
+        
+        .item-videos {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .item-header.active + .item-videos {
+            max-height: 1000px;
+            padding: 15px;
+        }
+        
+        .video-container {
+            margin-bottom: 15px;
+            border: 2px solid #d4b483;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .video-container iframe {
+            width: 100%;
+            height: 300px;
+            border: none;
+        }
+        
+        .video-caption {
+            padding: 8px;
+            background: #f5e8c9;
+            font-style: italic;
+        }
+        
+        .chicken-badge {
+            display: inline-block;
+            margin-left: 8px;
+            padding: 2px 8px;
+            background: #ffcc00;
+            color: #8b4513;
+            border-radius: 10px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+        
+        .no-videos {
+            padding: 10px;
+            text-align: center;
+            font-style: italic;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="restaurant-header">
+        <h1>{{ restaurant.name }}</h1>
+        <p>{{ restaurant.description }}</p>
+    </div>
+
+    <div class="menu-container">
+        {% for item in restaurant.menu_items %}
+        <div class="menu-item">
+            <div class="item-header" onclick="toggleVideos(this)">
+                <span class="item-name">
+                    {{ item.name }}
+                    {% if 'chiken' in item.name.lower() %}
+                    <span class="chicken-badge">Popular</span>
+                    {% endif %}
+                </span>
+                <span class="item-price">{{ item.price }}</span>
+            </div>
+            
+            <div class="item-videos">
+                {% set item_videos = [] %}
+                {% for video in restaurant.videos %}
+                    {% if video.caption and video.caption.lower() == 'chiken' %}
+                        {% set _ = item_videos.append(video) %}
+                    {% endif %}
+                {% endfor %}
+                
+                {% if item_videos %}
+                    {% for video in item_videos %}
+                    <div class="video-container">
+                        <video src="{{video.video_url}}" width="200" height="400" autoplay muted loop></video>
+                        <div class="video-caption">{{ video.caption }}</div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="no-videos">No videos available for this item</div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        function toggleVideos(element) {
+            element.classList.toggle('active');
+        }
+        
+        // Auto-expand items with videos
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.item-header').forEach(header => {
+                const videosDiv = header.nextElementSibling;
+                if (videosDiv.querySelector('iframe')) {
+                    header.classList.add('active');
+                    videosDiv.style.maxHeight = '1000px';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

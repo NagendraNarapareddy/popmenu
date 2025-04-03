@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pop Menu - Get Started</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #346134;
+        }
+        .form-card {
+            background-color: #f8f4e9;
+        }
+    </style>
+</head>
+<body class="min-h-screen text-white">
+    <!-- Header -->
+    <header class="py-6 px-8 flex justify-between items-center border-b border-green-700">
+        <h1 class="text-3xl font-bold">Pop Menu</h1>
+        <nav>
+            <ul class="flex space-x-8">
+                <li><a href="{{url_for('getstarted')}}" class="font-bold text-green-300">Get Started</a></li>
+                <li><a href="#" class="hover:text-green-300 transition">Support</a></li>
+                <li><a href="#" class="hover:text-green-300 transition">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Form Content -->
+    <main class="container mx-auto px-4 py-12 max-w-3xl">
+        <div class="form-card rounded-lg shadow-2xl overflow-hidden">
+            <!-- Form Header -->
+            <div class="bg-green-700 px-8 py-6">
+                <h2 class="text-2xl font-bold">Register Your Restaurant</h2>
+                <p class="text-green-200">Get started in just a few minutes</p>
+            </div>
+
+            <!-- Form Body -->
+            <!-- Form Body -->
+            <div class="p-8 text-gray-800">
+                <form method="POST" action="{{url_for('getstarted')}}">
+                    <!-- Restaurant Name -->
+                    <div class="mb-6">
+                        <label class="block text-gray-700 font-medium mb-2" for="restro-name">
+                            Restaurant Name 
+                        </label>
+                        <input 
+                            type="text" 
+                            id="restro-name" 
+                            name="restro-name" 
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                            placeholder="e.g. Taste of India"
+                            required>
+                    </div>
+
+                    <!-- Menu Items Section -->
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold mb-4">Sample Menu Items</h3>
+                        
+                        <!-- Item 1 -->
+                        <div class="flex items-center mb-4">
+                            <div class="flex-grow">
+                                <input 
+                                    type="text" 
+                                    name="menu_items[]"  
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                                    value="Cheeseburger"
+                                    readonly>
+                            </div>
+                            <div class="ml-4 w-24">
+                                <input 
+                                    type="text" 
+                                    name="menu_prices[]"  
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                                    value="$5"
+                                    readonly>
+                            </div>
+                        </div>
+
+                        <!-- Item 2 -->
+                        <div class="flex items-center mb-4">
+                            <div class="flex-grow">
+                                <input 
+                                    type="text" 
+                                    name="menu_items[]" 
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                                    value="Margherita Pizza"
+                                    readonly>
+                            </div>
+                            <div class="ml-4 w-24">
+                                <input 
+                                    type="text" 
+                                    name="menu_prices[]" 
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                                    value="$5"
+                                    readonly>
+                            </div>
+                        </div>
+
+                        <!-- Item 3 -->
+                        <div class="flex items-center">
+                            <div class="flex-grow">
+                                <input 
+                                    type="text" 
+                                    name="menu_items[]"  
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                                    value="Chicken Biryani"
+                                    readonly>
+                            </div>
+                            <div class="ml-4 w-24">
+                                <input 
+                                    type="text" 
+                                    name="menu_prices[]"  
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                                    value="$5"
+                                    readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="mt-8">
+                        <button 
+                            type="submit"
+                            class="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-3 rounded-lg font-medium flex items-center justify-center space-x-3 hover:opacity-90 transition">
+                            <i class="fab fa-instagram text-xl"></i>
+                            <span>Authenticate with Instagram</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-6 px-8 border-t border-green-700 text-center text-green-200">
+        <p>© 2023 Pop Menu. All rights reserved.</p>
+    </footer>
+</body>
+</html>

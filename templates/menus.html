@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Menus</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        
+        .restaurants-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .restaurant-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .restaurant-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .restaurant-image {
+            height: 180px;
+            background-color: #ddd;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .restaurant-info {
+            padding: 20px;
+            position: relative;
+        }
+        
+        .restaurant-name {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .edit-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: background 0.2s;
+        }
+        
+        .edit-btn:hover {
+            background: #3e8e41;
+        }
+        
+        .menu-items {
+            color: #555;
+            font-size: 0.95rem;
+            margin: 15px 0;
+            max-height: 120px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+        
+        .menu-item {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .menu-item-name {
+            font-weight: 500;
+        }
+        
+        .menu-item-price {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        
+        .rating-container {
+            display: flex;
+            align-items: center;
+            margin: 15px 0 10px;
+        }
+        
+        .stars {
+            color: #FFD700;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+        }
+        
+        .rating-value {
+            margin-left: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .reviews {
+            color: #777;
+            font-size: 0.85rem;
+            margin-left: 10px;
+        }
+        
+        .restaurant-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+        }
+        
+        .view-menu {
+            color: #4CAF50;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .token {
+            font-family: monospace;
+            font-size: 0.7rem;
+            color: #999;
+            word-break: break-all;
+            margin-top: 10px;
+        }
+        
+        /* Scrollbar styling */
+        .menu-items::-webkit-scrollbar {
+            width: 5px;
+        }
+        
+        .menu-items::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        .menu-items::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+        
+        .menu-items::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+</head>
+<body>
+    <h1>Restaurant Menus</h1>
+    
+    <div class="restaurants-container">
+        {% for restaurant in restaurants %}
+        <div class="restaurant-card" onclick="window.location.href='/edit/{{ restaurant.id }}'">
+            <div class="restaurant-image" style="background-image: url('https://source.unsplash.com/random/300x200/?restaurant,food&sig={{ restaurant.id }}')"></div>
+            <div class="restaurant-info">
+                <div class="restaurant-name">
+                    {{ restaurant.name }}
+                    <button class="edit-btn" onclick="event.stopPropagation(); window.location.href='/edit/{{ restaurant.id }}'">
+                        <i class="fas fa-edit"></i> Edit
+                    </button>
+                </div>
+                
+                <div class="rating-container">
+                    <div class="stars">★★★★☆</div>
+                    <div class="rating-value">4.2</div>
+                    <div class="reviews">(128 reviews)</div>
+                </div>
+                
+                <div class="menu-items">
+                    {% if restaurant.menu_items %}
+                        {% for item in restaurant.menu_items %}
+                        <div class="menu-item">
+                            <span class="menu-item-name">{{ item.name }}</span>
+                            <span class="menu-item-price">{{ item.price }}</span>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="menu-item">No menu items available</div>
+                    {% endif %}
+                </div>
+                
+                <div class="restaurant-footer">
+                    <a href="/menu" class="view-menu" onclick="event.stopPropagation()">
+                        View Full Menu <i class="fas fa-chevron-right"></i>
+                    </a>
+                    <div class="token" title="Access Token">{{ restaurant.access_token[:15] }}...</div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        // Prevent card click when clicking on interactive elements
+        document.querySelectorAll('.restaurant-card a, .restaurant-card button').forEach(el => {
+            el.addEventListener('click', e => e.stopPropagation());
+        });
+    </script>
+</body>
+</html>
